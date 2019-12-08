@@ -1,0 +1,25 @@
+<launch>
+  <arg name="MQTT_HOST" default="$(env MQTT_HOST)"/>
+  <arg name="MQTT_PORT" default="$(env MQTT_PORT)"/>
+  <arg name="MQTT_USERNAME" default="$(env MQTT_USERNAME)"/>
+  <arg name="MQTT_PASSWORD" default="$(env MQTT_PASSWORD)"/>
+  <arg name="MQTT_USE_CA" default="$(env MQTT_USE_CA)"/>
+  <arg name="ENTITY_TYPE" default="$(env ENTITY_TYPE)"/>
+  <arg name="ENTITY_ID" default="$(env ENTITY_ID)"/>
+  <arg name="TIMEZONE" default="Asia/Tokyo"/>
+  <arg name="SEND_DELTA_MILLISEC" default="1000"/>
+
+  <node name="robot_attrs" pkg="roomba_ros_bridge" type="robot_attrs.py" output="screen">
+    <rosparam command="delete" param=""/>
+    <param name="timezone" value="$(arg TIMEZONE)"/>
+    <param name="mqtt/host" value="$(arg MQTT_HOST)"/>
+    <param name="mqtt/port" value="$(arg MQTT_PORT)"/>
+    <param name="mqtt/username" value="$(arg MQTT_USERNAME)"/>
+    <param name="mqtt/password" value="$(arg MQTT_PASSWORD)"/>
+    <param name="mqtt/use_ca" value="$(arg MQTT_USE_CA)"/>
+    <param name="mqtt/cafile" value="$(find roomba_ros_bridge)/certs/DST_Root_CA_X3.pem"/>
+    <param name="roboticbase/entity_type" value="$(arg ENTITY_TYPE)"/>
+    <param name="roboticbase/entity_id" value="$(arg ENTITY_ID)"/>
+    <param name="thresholds/send_delta_millisec" value="$(arg SEND_DELTA_MILLISEC)"/>
+  </node>
+</launch>
